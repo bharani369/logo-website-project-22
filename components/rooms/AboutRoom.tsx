@@ -1,5 +1,5 @@
 "use client"
-
+1
 import { useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import { Text, Box, Image, Sphere, Plane } from "@react-three/drei"
