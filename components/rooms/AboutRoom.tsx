@@ -38,14 +38,13 @@ export function AboutRoom({ position }: AboutRoomProps) {
       <Text
         position={[0, 1.8, -9.8]}
         fontSize={0.35}
-        color="#000000"
+        color="#3498db"
         anchorX="center"
         anchorY="middle"
         maxWidth={12}
         textAlign="center"
-        font="/fonts/Geist-Bold.ttf"
       >
-        Aspiring Full Stack Developer
+        Pre-final year IT student & Aspiring Full Stack Developer
       </Text>
 
       {/* About description */}
@@ -70,9 +69,6 @@ export function AboutRoom({ position }: AboutRoomProps) {
 
       {/* Soft Skills section */}
       <SoftSkillsSection position={[0, 0.5, 8]} />
-
-      {/* 3D Laptop Setup */}
-      <LaptopSetup position={[0, 0.5, 2]} />
 
       {/* Tech stack display on side wall */}
       <Image url="/images/tech-stack.png" position={[8.5, 2.5, -5]} scale={[3, 3, 1]} transparent />
@@ -235,160 +231,6 @@ function FloatingParticles() {
           <meshStandardMaterial color="#3498db" transparent opacity={0.6} />
         </Box>
       ))}
-    </group>
-  )
-}
-
-function LaptopSetup({ position }: { position: [number, number, number] }) {
-  const laptopRef = useRef<THREE.Group>(null)
-  const mouseRef = useRef<THREE.Group>(null)
-  const keyboardRef = useRef<THREE.Group>(null)
-
-  useFrame((state) => {
-    if (laptopRef.current) {
-      laptopRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1
-    }
-    if (mouseRef.current) {
-      mouseRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.05
-    }
-    if (keyboardRef.current) {
-      keyboardRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 1.5 + 1) * 0.03
-    }
-  })
-
-  return (
-    <group position={position}>
-      {/* Desk surface */}
-      <Box args={[8, 0.2, 4]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#8b4513" roughness={0.3} metalness={0.1} />
-      </Box>
-
-      {/* Laptop */}
-      <group ref={laptopRef} position={[0, 0.5, -0.5]}>
-        {/* Laptop base */}
-        <Box args={[3, 0.15, 2]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#2c3e50" roughness={0.2} metalness={0.8} />
-        </Box>
-
-        {/* Laptop screen */}
-        <Box args={[3, 2, 0.1]} position={[0, 1.2, -0.9]} rotation={[-0.2, 0, 0]}>
-          <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} />
-        </Box>
-
-        {/* Screen display */}
-        <Box args={[2.8, 1.8, 0.05]} position={[0, 1.2, -0.85]} rotation={[-0.2, 0, 0]}>
-          <meshStandardMaterial color="#000000" emissive="#003366" emissiveIntensity={0.3} />
-        </Box>
-
-        {/* Code on screen */}
-        <Text
-          position={[0, 1.2, -0.8]}
-          rotation={[-0.2, 0, 0]}
-          fontSize={0.1}
-          color="#00ff00"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={2.5}
-          textAlign="left"
-        >
-          {`function developer() {
-  return "Full Stack";
-}`}
-        </Text>
-      </group>
-
-      {/* Wireless Mouse */}
-      <group ref={mouseRef} position={[2, 0.25, 0.5]}>
-        {/* Mouse body */}
-        <Box args={[0.8, 0.3, 1.2]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#34495e" roughness={0.2} metalness={0.7} />
-        </Box>
-
-        {/* Mouse scroll wheel */}
-        <Box args={[0.1, 0.35, 0.2]} position={[0, 0.05, -0.2]}>
-          <meshStandardMaterial color="#2c3e50" roughness={0.3} metalness={0.8} />
-        </Box>
-
-        {/* Mouse buttons */}
-        <Box args={[0.35, 0.32, 0.5]} position={[-0.2, 0.02, -0.3]}>
-          <meshStandardMaterial color="#2c3e50" roughness={0.2} metalness={0.8} />
-        </Box>
-        <Box args={[0.35, 0.32, 0.5]} position={[0.2, 0.02, -0.3]}>
-          <meshStandardMaterial color="#2c3e50" roughness={0.2} metalness={0.8} />
-        </Box>
-      </group>
-
-      {/* Mechanical Keyboard */}
-      <group ref={keyboardRef} position={[-1.5, 0.15, 1]}>
-        {/* Keyboard base */}
-        <Box args={[4, 0.3, 1.5]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#2c3e50" roughness={0.3} metalness={0.6} />
-        </Box>
-
-        {/* Keyboard keys */}
-        {Array.from({ length: 15 }).map((_, row) =>
-          Array.from({ length: 4 }).map((_, col) => (
-            <Box key={`${row}-${col}`} args={[0.2, 0.15, 0.2]} position={[-1.8 + row * 0.25, 0.22, -0.5 + col * 0.25]}>
-              <meshStandardMaterial
-                color={Math.random() > 0.9 ? "#3498db" : "#ecf0f1"}
-                roughness={0.1}
-                metalness={0.2}
-              />
-            </Box>
-          )),
-        )}
-
-        {/* Spacebar */}
-        <Box args={[2, 0.15, 0.2]} position={[0, 0.22, 0.3]}>
-          <meshStandardMaterial color="#ecf0f1" roughness={0.1} metalness={0.2} />
-        </Box>
-      </group>
-
-      {/* Desk accessories */}
-      <DeskAccessories position={[0, 0.1, 0]} />
-    </group>
-  )
-}
-
-function DeskAccessories({ position }: { position: [number, number, number] }) {
-  return (
-    <group position={position}>
-      {/* Coffee mug */}
-      <group position={[3, 0.4, -1]}>
-        <Box args={[0.4, 0.6, 0.4]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#8b4513" roughness={0.8} />
-        </Box>
-        {/* Coffee */}
-        <Box args={[0.35, 0.1, 0.35]} position={[0, 0.25, 0]}>
-          <meshStandardMaterial color="#3e2723" emissive="#2e1a17" emissiveIntensity={0.2} />
-        </Box>
-        {/* Handle */}
-        <Box args={[0.1, 0.3, 0.1]} position={[0.25, 0, 0]}>
-          <meshStandardMaterial color="#8b4513" roughness={0.8} />
-        </Box>
-      </group>
-
-      {/* Notebook */}
-      <group position={[-3, 0.15, 0]} rotation={[0, 0.3, 0]}>
-        <Box args={[1.5, 0.05, 2]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#e74c3c" roughness={0.6} />
-        </Box>
-        {/* Pen */}
-        <Box args={[0.05, 0.05, 1]} position={[0.5, 0.05, 0]} rotation={[0, 0.5, 0]}>
-          <meshStandardMaterial color="#3498db" roughness={0.2} metalness={0.8} />
-        </Box>
-      </group>
-
-      {/* Phone */}
-      <group position={[2.5, 0.15, 1.5]} rotation={[0, -0.2, 0]}>
-        <Box args={[0.4, 0.05, 0.8]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#1a1a1a" roughness={0.1} metalness={0.9} />
-        </Box>
-        {/* Screen */}
-        <Box args={[0.35, 0.06, 0.7]} position={[0, 0.005, 0]}>
-          <meshStandardMaterial color="#000000" emissive="#001122" emissiveIntensity={0.3} />
-        </Box>
-      </group>
     </group>
   )
 }
